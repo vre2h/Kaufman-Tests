@@ -1,11 +1,12 @@
 export default [
   {
-    description: "",
+    id: 1,
+    description: "Test 1",
     images: [
-      "../img/ConceptualThinking/output/1_1.jpg",
-      "../img/ConceptualThinking/output/1_1.jpg",
-      "../img/ConceptualThinking/output/1_1.jpg",
-      "../img/ConceptualThinking/output/1_2.jpg"
+      require("../../img/ConceptualThinking/1_1.jpg"),
+      require("../../img/ConceptualThinking/1_1.jpg"),
+      require("../../img/ConceptualThinking/1_1.jpg"),
+      require("../../img/ConceptualThinking/1_2.jpg")
     ],
     answer: "4"
   }
