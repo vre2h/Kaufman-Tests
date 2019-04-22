@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19003,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 28529,
+  "expoServerNgrokUrl": "https://6j-rhp.anonymous.program.exp.direct",
+  "packagerNgrokUrl": "https://packager.6j-rhp.anonymous.program.exp.direct",
+  "ngrokPid": 28998
 }

@@ -1,6 +1,7 @@
 import React from "react";
-import { TouchableOpacity, View, Text, Platform, Image } from "react-native";
+import { View, TouchableOpacity, Text, Platform, Image } from "react-native";
 import { Icon } from "expo";
+import Stager, { Stage } from "react-native-stager";
 
 import test1 from "../tests/test-1/test-1";
 import Colors from "../constants/Colors";
@@ -36,35 +37,81 @@ export default class TestItem extends React.Component {
     )
   });
 
+  state = {
+    tests: test1,
+    finished: false
+  };
+
   render() {
+    const { tests, finished } = this.state;
+    if (finished) {
+      return (
+        <ScrollView>
+          <View>
+            <View>
+              <Text>Qstn: answer answered</Text>
+            </View>
+            {Array.from(tests).map(({ id, answer, answered }) => (
+              <View key={id}>
+                <Text>
+                  {id}: {answer} {answered}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      );
+    }
+
     return (
       <ScrollView>
-        <View>
-          <Text>Test 1</Text>
-          {test1.map(({ id, description, images }) => (
-            <View key={id}>
-              <Text>{description}</Text>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                  borderColor: red
-                }}
-              >
-                {images.map((src, idx) => {
-                  return (
-                    <Image
-                      style={{ width: 150, height: 150 }}
-                      source={src}
-                      key={idx}
-                    />
-                  );
-                })}
-              </View>
-            </View>
+        <Stager>
+          {Array.from(tests).map(({ id, description, images }) => (
+            <Stage continue={() => true} key={id}>
+              {({ context }) => (
+                <View>
+                  <Text>{id}</Text>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: "row",
+                      flexWrap: "wrap",
+                      borderColor: red
+                    }}
+                  >
+                    {images.map((src, idx) => {
+                      return (
+                        <TouchableOpacity
+                          key={idx}
+                          onPress={() => {
+                            this.setState(
+                              ({ tests }) => ({
+                                tests: {
+                                  ...tests,
+                                  [id - 1]: {
+                                    ...tests[id - 1],
+                                    answered: idx + 1
+                                  }
+                                },
+                                finished: id === tests.length
+                              }),
+                              context.next
+                            );
+                          }}
+                        >
+                          <Image
+                            style={{ width: 150, height: 150 }}
+                            source={src}
+                          />
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                </View>
+              )}
+            </Stage>
           ))}
-        </View>
+        </Stager>
       </ScrollView>
     );
   }
