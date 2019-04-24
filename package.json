@@ -20,7 +20,7 @@
     "react-native-elements": "^1.1.0",
     "react-native-stager": "^1.0.0",
     "react-navigation": "^3.0.9",
-    "react-redux": "^7.0.2",
+    "react-redux": "6.0.0",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0"
   },
