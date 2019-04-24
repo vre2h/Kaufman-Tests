@@ -21,7 +21,7 @@ const UserForm = ({
 }) => {
   return (
     <Container>
-      <Content>
+      <Content keyboardShouldPersistTaps="always">
         <Form>
           <Item floatingLabel>
             <Label>Name</Label>

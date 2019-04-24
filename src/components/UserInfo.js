@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 const UserInfo = ({ fname, lname, fatherName, onEdit }) => {
   return (
     <Container>
-      <Content padder>
+      <Content keyboardShouldPersistTaps="always" padder>
         <Card>
           <CardItem header bordered>
             <Text>User Profile</Text>
@@ -41,15 +41,15 @@ const UserInfo = ({ fname, lname, fatherName, onEdit }) => {
             <Body>
               <View style={styles.userInfo}>
                 <Text style={styles.userDesc}>First Name:</Text>
-                <Text>{fname}</Text>
+                <Text>{fname || "-"}</Text>
               </View>
               <View style={styles.userInfo}>
                 <Text style={styles.userDesc}>Last Name:</Text>
-                <Text>{lname}</Text>
+                <Text>{lname || "-"}</Text>
               </View>
               <View style={styles.userInfo}>
                 <Text style={styles.userDesc}>Father Name:</Text>
-                <Text>{fatherName}</Text>
+                <Text>{fatherName || "-"}</Text>
               </View>
             </Body>
           </CardItem>
