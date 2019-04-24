@@ -24,6 +24,9 @@ export default class LinksScreen extends React.Component {
       <If condition={isEdit}>
         <Then>
           <UserForm
+            fname={fname}
+            lname={lname}
+            fatherName={fatherName}
             onFatherName={this.onFatherName}
             onFname={this.onFname}
             onLname={this.onLname}

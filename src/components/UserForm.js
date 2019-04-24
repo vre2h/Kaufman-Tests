@@ -10,7 +10,15 @@ import {
   Text
 } from "native-base";
 
-const UserForm = ({ onLname, onFname, onFatherName, onEdit }) => {
+const UserForm = ({
+  onLname,
+  onFname,
+  onFatherName,
+  onEdit,
+  fname,
+  lname,
+  fatherName
+}) => {
   return (
     <Container>
       <Content>
