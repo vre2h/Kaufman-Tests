@@ -8,7 +8,7 @@ import Colors from "../constants/Colors";
 import { red } from "ansi-colors";
 import { ScrollView } from "react-native-gesture-handler";
 
-export default class TestItem extends React.Component {
+export default class ConceptualThinkingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Test 1",
     tabBarVisible: false,

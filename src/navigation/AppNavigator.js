@@ -1,12 +1,12 @@
 import React from "react";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createStackNavigator } from "react-navigation";
-import TestItemScreen from "../screens/TestItemScreen";
+import ConceptualThinkingScreen from "../screens/ConceptualThinkingScreen";
 
 import MainTabNavigator from "./MainTabNavigator";
 
-const TestItemStack = createStackNavigator({
-  Test: TestItemScreen
+const SecondaryStack = createStackNavigator({
+  CT: ConceptualThinkingScreen
 });
 
 export default createAppContainer(
@@ -14,6 +14,6 @@ export default createAppContainer(
     // You could add another route here for authentication.
     // Read more at https://reactnavigation.org/docs/en/auth-flow.html
     Main: MainTabNavigator,
-    Test: TestItemStack
+    Secondary: SecondaryStack
   })
 );

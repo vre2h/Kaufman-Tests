@@ -6,7 +6,8 @@ import TabBarIcon from "../components/TabBarIcon";
 const list = [
   {
     idx: 1,
-    name: "Test 1"
+    name: "Conceptual Thinking",
+    url: "CT"
   },
   {
     idx: 2,
@@ -34,7 +35,7 @@ export default class TestsScreen extends React.Component {
         )}
         key={item.idx}
         title={item.name}
-        onPress={() => navigate("Test")}
+        onPress={() => navigate(`${item.url}`)}
         bottomDivider
       />
     );
