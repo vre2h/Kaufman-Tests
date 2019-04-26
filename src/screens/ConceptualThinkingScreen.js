@@ -1,14 +1,14 @@
 import React from "react";
 import { View, TouchableOpacity, Text, Platform, Image } from "react-native";
 import { Icon } from "expo";
-import Stager, { Stage } from "react-native-stager";
-
-import test1 from "../tests/test-1/test-1";
-import Colors from "../constants/Colors";
-import { red } from "ansi-colors";
+import { connect } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 
-export default class ConceptualThinkingScreen extends React.Component {
+import Colors from "../constants/Colors";
+import TestsStager from "../components/TestsStager";
+import { setCTTestItem } from "../actions/tests";
+
+class ConceptualThinkingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Test 1",
     tabBarVisible: false,
@@ -37,13 +37,9 @@ export default class ConceptualThinkingScreen extends React.Component {
     )
   });
 
-  state = {
-    tests: test1,
-    finished: false
-  };
-
   render() {
-    const { tests, finished } = this.state;
+    const { tests, finished, handleChosenItem } = this.props;
+    console.log(finished);
     if (finished) {
       return (
         <ScrollView>
@@ -63,56 +59,22 @@ export default class ConceptualThinkingScreen extends React.Component {
       );
     }
 
-    return (
-      <ScrollView>
-        <Stager>
-          {Array.from(tests).map(({ id, description, images }) => (
-            <Stage continue={() => true} key={id}>
-              {({ context }) => (
-                <View>
-                  <Text>{id}</Text>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: "row",
-                      flexWrap: "wrap",
-                      borderColor: red
-                    }}
-                  >
-                    {images.map((src, idx) => {
-                      return (
-                        <TouchableOpacity
-                          key={idx}
-                          onPress={() => {
-                            this.setState(
-                              ({ tests }) => ({
-                                tests: {
-                                  ...tests,
-                                  [id - 1]: {
-                                    ...tests[id - 1],
-                                    answered: idx + 1
-                                  }
-                                },
-                                finished: id === tests.length
-                              }),
-                              context.next
-                            );
-                          }}
-                        >
-                          <Image
-                            style={{ width: 150, height: 150 }}
-                            source={src}
-                          />
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                </View>
-              )}
-            </Stage>
-          ))}
-        </Stager>
-      </ScrollView>
-    );
+    return <TestsStager tests={tests} handleChosenItem={handleChosenItem} />;
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    tests: state.conceptualThinking.tests,
+    finished: state.conceptualThinking.finished
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  handleChosenItem: arg => dispatch(setCTTestItem(arg))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConceptualThinkingScreen);
