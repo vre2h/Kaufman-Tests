@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19002,
+  "devToolsPort": 19003,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 2481,
-  "expoServerNgrokUrl": "https://eq-tw3.anonymous.program.exp.direct",
-  "packagerNgrokUrl": "https://packager.eq-tw3.anonymous.program.exp.direct",
-  "ngrokPid": 3251
+  "packagerPid": 25062,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

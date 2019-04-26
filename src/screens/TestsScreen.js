@@ -11,7 +11,8 @@ const list = [
   },
   {
     idx: 2,
-    name: "Test 2"
+    name: "Pattern Reasoning",
+    url: "PR"
   }
 ];
 

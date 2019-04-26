@@ -4,9 +4,11 @@ import { createStackNavigator } from "react-navigation";
 import ConceptualThinkingScreen from "../screens/ConceptualThinkingScreen";
 
 import MainTabNavigator from "./MainTabNavigator";
+import PaternReasoningScrenn from "../screens/PaternReasoningScreen";
 
 const SecondaryStack = createStackNavigator({
-  CT: ConceptualThinkingScreen
+  CT: ConceptualThinkingScreen,
+  PR: PaternReasoningScrenn
 });
 
 export default createAppContainer(

@@ -6,10 +6,10 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import Colors from "../constants/Colors";
 import TestsStager from "../components/TestsStager";
-import { setCTTestItem, dropCT } from "../actions/tests";
+import { setPRTestItem, dropPR } from "../actions/tests";
 import { Button } from "native-base";
 
-class ConceptualThinkingScreen extends React.Component {
+class PatternReasoningScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Test 1",
     tabBarVisible: false,
@@ -40,7 +40,7 @@ class ConceptualThinkingScreen extends React.Component {
 
   render() {
     const { tests, finished, handleChosenItem, resetData } = this.props;
-
+    console.log(tests);
     if (finished) {
       return (
         <ScrollView>
@@ -69,17 +69,17 @@ class ConceptualThinkingScreen extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    tests: state.conceptualThinking.tests,
-    finished: state.conceptualThinking.finished
+    tests: state.patternReasoning.tests,
+    finished: state.patternReasoning.finished
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  handleChosenItem: arg => dispatch(setCTTestItem(arg)),
-  resetData: () => dispatch(dropCT())
+  handleChosenItem: arg => dispatch(setPRTestItem(arg)),
+  resetData: () => dispatch(dropPR())
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ConceptualThinkingScreen);
+)(PatternReasoningScreen);
