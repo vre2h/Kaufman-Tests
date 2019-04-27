@@ -1,48 +1,38 @@
 import React from "react";
-import { View, TouchableOpacity, Text, Image } from "react-native";
 import Stager, { Stage } from "react-native-stager";
 import { ScrollView } from "react-native-gesture-handler";
-import { When } from "react-if";
+import { When, If, Then, Else } from "react-if";
+import CTItemView from "./CTItemView";
+import PRItemView from "./PRItemView";
 
-const TestsStager = ({ tests, handleChosenItem }) => {
+const TestsStager = ({ tests, handleChosenItem, testValue }) => {
   return (
     <ScrollView>
       <When condition={!!tests.length}>
         <Stager>
-          {Array.from(tests).map(({ id, description, images }) => (
+          {Array.from(tests).map(({ id, images }) => (
             <Stage continue={() => true} key={id}>
               {({ context }) => (
-                <View>
-                  <Text>{id}</Text>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: "row",
-                      flexWrap: "wrap"
-                    }}
-                  >
-                    {images.map((src, idx) => {
-                      return (
-                        <TouchableOpacity
-                          key={idx}
-                          onPress={() => {
-                            handleChosenItem({
-                              itemId: id - 1,
-                              answerId: idx + 1,
-                              testsLength: tests.length - 1
-                            });
-                            context.next();
-                          }}
-                        >
-                          <Image
-                            style={{ width: 150, height: 150 }}
-                            source={src}
-                          />
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                </View>
+                <If condition={testValue === "ct"}>
+                  <Then>
+                    <CTItemView
+                      context={context}
+                      itemId={id}
+                      images={images}
+                      handleChosenItem={handleChosenItem}
+                      testLength={tests.length && tests.length}
+                    />
+                  </Then>
+                  <Else>
+                    <PRItemView
+                      context={context}
+                      id={id}
+                      images={images}
+                      handleChosenItem={handleChosenItem}
+                      testsLength={tests.length && tests.length}
+                    />
+                  </Else>
+                </If>
               )}
             </Stage>
           ))}

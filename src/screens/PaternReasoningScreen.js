@@ -40,7 +40,7 @@ class PatternReasoningScreen extends React.Component {
 
   render() {
     const { tests, finished, handleChosenItem, resetData } = this.props;
-    console.log(tests);
+
     if (finished) {
       return (
         <ScrollView>
@@ -55,22 +55,28 @@ class PatternReasoningScreen extends React.Component {
                 </Text>
               </View>
             ))}
+            <Button type="primary" block onPress={resetData}>
+              <Text>Reset</Text>
+            </Button>
           </View>
-          <Button block onPress={resetData}>
-            <Text>Reset</Text>
-          </Button>
         </ScrollView>
       );
     }
 
-    return <TestsStager tests={tests} handleChosenItem={handleChosenItem} />;
+    return (
+      <TestsStager
+        testValue="pr"
+        tests={tests}
+        handleChosenItem={handleChosenItem}
+      />
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    tests: state.patternReasoning.tests,
-    finished: state.patternReasoning.finished
+    tests: state.pr.tests,
+    finished: state.pr.finished
   };
 };
 

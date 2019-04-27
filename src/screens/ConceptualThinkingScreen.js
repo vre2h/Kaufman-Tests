@@ -55,15 +55,21 @@ class ConceptualThinkingScreen extends React.Component {
                 </Text>
               </View>
             ))}
+            <Button type="primary" block onPress={resetData}>
+              <Text>Reset</Text>
+            </Button>
           </View>
-          <Button block onPress={resetData}>
-            <Text>Reset</Text>
-          </Button>
         </ScrollView>
       );
     }
 
-    return <TestsStager tests={tests} handleChosenItem={handleChosenItem} />;
+    return (
+      <TestsStager
+        testValue="ct"
+        tests={tests}
+        handleChosenItem={handleChosenItem}
+      />
+    );
   }
 }
 
