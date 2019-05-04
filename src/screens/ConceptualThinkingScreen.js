@@ -4,7 +4,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Stager, { Stage } from "react-native-stager";
 import { If, Then, Else } from "react-if";
 
-import { setCTTestItem, dropCT } from "../actions/tests";
+import { setCTTestItem, dropCT, setCTTestItemTime } from "../actions/tests";
 import PrintResults from "../components/Results";
 import CTItemView from "../components/CTItemView";
 import BackHeader from "../components/BackHeader";
@@ -17,7 +17,13 @@ class ConceptualThinkingScreen extends React.Component {
   });
 
   render() {
-    const { tests, finished, handleChosenItem, resetData } = this.props;
+    const {
+      tests,
+      finished,
+      handleChosenItem,
+      resetData,
+      handleStartTime
+    } = this.props;
 
     return (
       <ScrollView>
@@ -35,6 +41,7 @@ class ConceptualThinkingScreen extends React.Component {
                       id={id}
                       images={images}
                       handleChosenItem={handleChosenItem}
+                      handleStartTime={handleStartTime}
                       testsLength={tests.length && tests.length}
                     />
                   )}
@@ -57,6 +64,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   handleChosenItem: arg => dispatch(setCTTestItem(arg)),
+  handleStartTime: arg => dispatch(setCTTestItemTime(arg)),
   resetData: () => dispatch(dropCT())
 });
 

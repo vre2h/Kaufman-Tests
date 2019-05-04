@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import { SET_PR_ITEM, DROP_PR } from "../actions/constants";
+import { SET_PR_ITEM, DROP_PR, SET_PR_ITEM_TIME } from "../actions/constants";
 import initialState from "../tests/test-2/test-2";
 
 const tests = (state = initialState, action) => {
@@ -10,7 +10,19 @@ const tests = (state = initialState, action) => {
         ...state,
         [action.payload.itemId]: {
           ...state[action.payload.itemId],
-          answered: action.payload.answerId
+          answered: action.payload.answerId,
+          delta:
+            (action.payload.endTime.getTime() -
+              action.payload.startTime.getTime()) /
+            1000
+        }
+      };
+    case SET_PR_ITEM_TIME:
+      return {
+        ...state,
+        [action.payload.itemId]: {
+          ...state[action.payload.itemId],
+          startTime: action.payload.startTime
         }
       };
     case DROP_PR:

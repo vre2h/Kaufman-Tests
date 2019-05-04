@@ -5,25 +5,59 @@ import {
   DROP_CT,
   SEND_RES,
   SEND_RES_FAILED,
-  SEND_RES_SUCCESS
+  SEND_RES_SUCCESS,
+  SET_CT_ITEM_TIME,
+  SET_PR_ITEM_TIME
 } from "./constants";
-import { doGet, doPost } from "../api/request";
+import { doPost } from "../api/request";
 
-export const setCTTestItem = ({ itemId, answerId, testsLength }) => ({
+export const setCTTestItemTime = ({ itemId, time }) => ({
+  type: SET_CT_ITEM_TIME,
+  payload: {
+    itemId,
+    time
+  }
+});
+
+export const setCTTestItem = ({
+  itemId,
+  answerId,
+  testsLength,
+  endTime,
+  startTime
+}) => ({
   type: SET_CT_ITEM,
   payload: {
     itemId,
     answerId,
-    testsLength
+    testsLength,
+    endTime,
+    startTime
   }
 });
 
-export const setPRTestItem = ({ itemId, answerId, testsLength }) => ({
+export const setPRTestItemTime = ({ itemId, time }) => ({
+  type: SET_PR_ITEM_TIME,
+  payload: {
+    itemId,
+    time
+  }
+});
+
+export const setPRTestItem = ({
+  itemId,
+  answerId,
+  testsLength,
+  endTime,
+  startTime
+}) => ({
   type: SET_PR_ITEM,
   payload: {
     itemId,
     answerId,
-    testsLength
+    testsLength,
+    endTime,
+    startTime
   }
 });
 

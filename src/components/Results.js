@@ -6,12 +6,12 @@ const PrintResults = ({ tests, resetData }) => {
   return (
     <View>
       <View>
-        <Text>Qstn: answer answered</Text>
+        <Text>Qstn: answer answered delta</Text>
       </View>
-      {Array.from(tests).map(({ id, answer, answered }) => (
+      {Array.from(tests).map(({ id, answer, answered, delta }) => (
         <View key={id}>
           <Text>
-            {id}: {answer} {answered}
+            {id}: {answer} {answered} {delta}s
           </Text>
         </View>
       ))}

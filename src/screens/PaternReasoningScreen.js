@@ -4,7 +4,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Stager, { Stage } from "react-native-stager";
 import { If, Then, Else } from "react-if";
 
-import { setPRTestItem, dropPR } from "../actions/tests";
+import { setPRTestItem, dropPR, setPRTestItemTime } from "../actions/tests";
 import PrintResults from "../components/Results";
 import PRItemView from "../components/PRItemView";
 import BackHeader from "../components/BackHeader";
@@ -17,7 +17,13 @@ class PatternReasoningScreen extends React.Component {
   });
 
   render() {
-    const { tests, finished, handleChosenItem, resetData } = this.props;
+    const {
+      tests,
+      finished,
+      handleChosenItem,
+      resetData,
+      handleStartTime
+    } = this.props;
 
     return (
       <ScrollView>
@@ -36,6 +42,7 @@ class PatternReasoningScreen extends React.Component {
                       images={images}
                       handleChosenItem={handleChosenItem}
                       testsLength={tests.length && tests.length}
+                      handleStartTime={handleStartTime}
                     />
                   )}
                 </Stage>
@@ -57,7 +64,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   handleChosenItem: arg => dispatch(setPRTestItem(arg)),
-  resetData: () => dispatch(dropPR())
+  resetData: () => dispatch(dropPR()),
+  handleStartTime: arg => dispatch(setPRTestItemTime(arg))
 });
 
 export default connect(
