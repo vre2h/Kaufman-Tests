@@ -7,9 +7,12 @@ import {
   Text,
   View
 } from "react-native";
+import { Button } from "native-base";
 import { WebBrowser } from "expo";
-
-export default class HomeScreen extends React.Component {
+import { doPost, doGet } from "../api/request";
+import { connect } from "react-redux";
+import { sendRes } from "../actions/tests";
+class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
@@ -40,11 +43,33 @@ export default class HomeScreen extends React.Component {
               Application will be filled with tests as soon as possible, please
               don't be mad at me.
             </Text>
+            <Button
+              style={{ marginTop: 20 }}
+              block
+              primary
+              onPress={this.sendData}
+            >
+              <Text
+                style={{
+                  color: "#ffffff"
+                }}
+              >
+                Send Data
+              </Text>
+            </Button>
           </View>
         </ScrollView>
       </View>
     );
   }
+
+  sendData = () => {
+    this.props.sendData({
+      CTTests: this.props.CTTests,
+      PRTests: this.props.PRTests,
+      userInfo: this.props.userInfo
+    });
+  };
 
   _maybeRenderDevelopmentModeWarning() {
     if (__DEV__) {
@@ -170,3 +195,18 @@ const styles = StyleSheet.create({
     color: "#2e78b7"
   }
 });
+
+const mapDispatchToProps = dispatch => ({
+  sendData: arg => dispatch(sendRes(arg))
+});
+
+const mapStateToProps = state => ({
+  CTTests: state.conceptualThinking.tests,
+  PRTests: state.pr.tests,
+  userInfo: state.userInfo
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomeScreen);
