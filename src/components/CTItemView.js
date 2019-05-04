@@ -1,10 +1,10 @@
 import React from "react";
 import { View, TouchableOpacity, Text, Image } from "react-native";
 
-const CTView = ({ context, images, itemId, handleChosenItem, testsLength }) => {
+const CTView = ({ context, images, id, handleChosenItem, testsLength }) => {
   return (
     <View>
-      <Text>{itemId}</Text>
+      <Text>{id}</Text>
       <View
         style={{
           flex: 1,
@@ -18,7 +18,7 @@ const CTView = ({ context, images, itemId, handleChosenItem, testsLength }) => {
               key={idx}
               onPress={() => {
                 handleChosenItem({
-                  itemId: itemId - 1,
+                  itemId: id - 1,
                   answerId: idx + 1,
                   testsLength: testsLength - 1
                 });

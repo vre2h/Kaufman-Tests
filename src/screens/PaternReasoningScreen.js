@@ -1,74 +1,49 @@
 import React from "react";
-import { View, TouchableOpacity, Text, Platform, Image } from "react-native";
-import { Icon } from "expo";
 import { connect } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
+import Stager, { Stage } from "react-native-stager";
+import { If, Then, Else } from "react-if";
 
-import Colors from "../constants/Colors";
-import TestsStager from "../components/TestsStager";
 import { setPRTestItem, dropPR } from "../actions/tests";
-import { Button } from "native-base";
+import PrintResults from "../components/Results";
+import PRItemView from "../components/PRItemView";
+import BackHeader from "../components/BackHeader";
 
 class PatternReasoningScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Test 1",
     tabBarVisible: false,
-    headerLeft: (
-      <TouchableOpacity
-        style={{
-          flex: 1,
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          marginLeft: 10
-        }}
-        onPress={() => navigation.navigate("Tests")}
-      >
-        <Icon.Ionicons
-          name={Platform.OS === "ios" ? `ios-arrow-back` : "left"}
-          size={35}
-          color={Colors.tabIconSelected}
-        />
-        <Text
-          style={{ marginLeft: 7, color: Colors.tabIconSelected, fontSize: 16 }}
-        >
-          Back
-        </Text>
-      </TouchableOpacity>
-    )
+    headerLeft: () => <BackHeader navigate={navigation.navigate} />
   });
 
   render() {
     const { tests, finished, handleChosenItem, resetData } = this.props;
 
-    if (finished) {
-      return (
-        <ScrollView>
-          <View>
-            <View>
-              <Text>Qstn: answer answered</Text>
-            </View>
-            {Array.from(tests).map(({ id, answer, answered }) => (
-              <View key={id}>
-                <Text>
-                  {id}: {answer} {answered}
-                </Text>
-              </View>
-            ))}
-            <Button type="primary" block onPress={resetData}>
-              <Text>Reset</Text>
-            </Button>
-          </View>
-        </ScrollView>
-      );
-    }
-
     return (
-      <TestsStager
-        testValue="pr"
-        tests={tests}
-        handleChosenItem={handleChosenItem}
-      />
+      <ScrollView>
+        <If condition={finished}>
+          <Then>
+            <PrintResults resetData={resetData} tests={tests} />
+          </Then>
+          <Else>
+            <Stager>
+              {Array.from(tests).map(({ id, images }) => (
+                <Stage continue={() => true} key={id}>
+                  {({ context }) => (
+                    <PRItemView
+                      context={context}
+                      id={id}
+                      images={images}
+                      handleChosenItem={handleChosenItem}
+                      testsLength={tests.length && tests.length}
+                    />
+                  )}
+                </Stage>
+              ))}
+            </Stager>
+          </Else>
+        </If>
+      </ScrollView>
     );
   }
 }
