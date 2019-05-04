@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19003,
+  "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 19783,
+  "packagerPid": 14578,
   "expoServerNgrokUrl": "https://5c-pwe.anonymous.program.exp.direct",
   "packagerNgrokUrl": "https://packager.5c-pwe.anonymous.program.exp.direct",
-  "ngrokPid": 20960
+  "ngrokPid": 14977
 }

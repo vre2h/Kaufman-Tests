@@ -7,3 +7,7 @@ export const SET_PR_ITEM = "SET_PR_ITEM";
 
 export const DROP_PR = "DROP_PR";
 export const DROP_CT = "DROP_CT";
+
+export const SEND_RES = "SEND_RES";
+export const SEND_RES_SUCCESS = "SEND_RES_SUCCESS";
+export const SEND_RES_FAILED = "SEND_RES_FAILED";
