@@ -1,4 +1,5 @@
 export default {
+  title: 'Conceptual Thinking',
   0: {
     id: 1,
     description: "Test 1",

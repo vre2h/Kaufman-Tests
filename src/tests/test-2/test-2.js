@@ -1,4 +1,5 @@
 export default {
+  title: "Pattern Reasoning",
   0: {
     id: 1,
     description: "Test 2",
