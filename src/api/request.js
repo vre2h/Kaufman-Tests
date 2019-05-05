@@ -30,7 +30,6 @@ export function request(url, method, body = null) {
   return new Promise((resolve, reject) =>
     fetch(`${url}`, fetchData).then(
       async res => {
-        console.log(res);
         const parsedBody = await res.json();
         console.log(`url - "/${url}"\nresponse - `, parsedBody);
 
