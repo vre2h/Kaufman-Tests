@@ -7,7 +7,8 @@ import {
   Input,
   Label,
   Button,
-  Text
+  Text,
+  Textarea
 } from "native-base";
 
 const UserForm = ({
@@ -17,7 +18,15 @@ const UserForm = ({
   onEdit,
   fname,
   lname,
-  fatherName
+  fatherName,
+  email,
+  birthday,
+  additionalInfo,
+  onPhoneNumber,
+  onEmail,
+  onAdditionalInfo,
+  onBirthday,
+  phoneNumber
 }) => {
   return (
     <Container>
@@ -35,6 +44,27 @@ const UserForm = ({
             <Label>Father Name</Label>
             <Input value={fatherName} onChangeText={onFatherName} />
           </Item>
+          <Item floatingLabel>
+            <Label>Email</Label>
+            <Input value={email} onChangeText={onEmail} />
+          </Item>
+          <Item floatingLabel>
+            <Label>Phone Number</Label>
+            <Input value={phoneNumber} onChangeText={onPhoneNumber} />
+          </Item>
+          <Item floatingLabel>
+            <Label>Age</Label>
+            <Input value={birthday} onChangeText={onBirthday} />
+          </Item>
+          <Textarea
+            onChange={e => {
+              onAdditionalInfo(e.nativeEvent.text);
+            }}
+            value={additionalInfo}
+            rowSpan={5}
+            bordered
+            placeholder="Textarea"
+          />
         </Form>
         <Button
           onPress={() => onEdit(false)}

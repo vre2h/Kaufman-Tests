@@ -5,7 +5,15 @@ import { connect } from "react-redux";
 
 import UserForm from "../components/UserForm";
 import UserInfo from "../components/UserInfo";
-import { setFname, setFathername, setLname } from "../actions/user-info";
+import {
+  setFname,
+  setFathername,
+  setLname,
+  setEmail,
+  setBirthday,
+  setPhoneNumber,
+  setAdditionalInfo
+} from "../actions/user-info";
 
 class UserInfoScreen extends React.Component {
   static navigationOptions = {
@@ -18,7 +26,15 @@ class UserInfoScreen extends React.Component {
 
   render() {
     const { isEdit } = this.state;
-    const { fatherName, lname, fname } = this.props;
+    const {
+      fatherName,
+      lname,
+      fname,
+      email,
+      additionalInfo,
+      birthday,
+      phoneNumber
+    } = this.props;
 
     return (
       <If condition={isEdit}>
@@ -27,9 +43,17 @@ class UserInfoScreen extends React.Component {
             fname={fname}
             lname={lname}
             fatherName={fatherName}
+            phoneNumber={phoneNumber}
+            email={email}
+            additionalInfo={additionalInfo}
+            birthday={birthday}
             onFatherName={this.onFatherName}
             onFname={this.onFname}
             onLname={this.onLname}
+            onEmail={this.onEmail}
+            onAdditionalInfo={this.onAdditionalInfo}
+            onBirthday={this.onBirthday}
+            onPhoneNumber={this.onPhoneNumber}
             onEdit={this.onEdit}
           />
         </Then>
@@ -38,6 +62,10 @@ class UserInfoScreen extends React.Component {
             fname={fname}
             lname={lname}
             fatherName={fatherName}
+            email={email}
+            additionalInfo={additionalInfo}
+            phoneNumber={phoneNumber}
+            birthday={birthday}
             onEdit={this.onEdit}
           />
         </Else>
@@ -52,18 +80,36 @@ class UserInfoScreen extends React.Component {
   onLname = lname => this.props.setLname(lname);
 
   onFatherName = fatherName => this.props.setFatherName(fatherName);
+
+  onEmail = email => this.props.setEmail(email);
+
+  onAdditionalInfo = additionalInfo =>
+    this.props.setAdditionalInfo(additionalInfo);
+
+  onBirthday = bday => this.props.setBirthday(bday);
+
+  onPhoneNumber = phoneNumber => this.props.setPhoneNumber(phoneNumber);
 }
 
 const mapStateToProps = state => ({
   fname: state.userInfo.fname,
   lname: state.userInfo.lname,
-  fatherName: state.userInfo.fatherName
+  fatherName: state.userInfo.fatherName,
+  email: state.userInfo.email,
+  birthday: state.userInfo.birthday,
+  additionalInfo: state.userInfo.additionalInfo,
+  phoneNumber: state.userInfo.phoneNumber
 });
 
 const mapDispatchToProps = dispatch => ({
   setLname: lname => dispatch(setLname(lname)),
   setFname: fname => dispatch(setFname(fname)),
-  setFatherName: fatherName => dispatch(setFathername(fatherName))
+  setFatherName: fatherName => dispatch(setFathername(fatherName)),
+  setEmail: email => dispatch(setEmail(email)),
+  setBirthday: bday => dispatch(setBirthday(bday)),
+  setAdditionalInfo: additionalInfo =>
+    dispatch(setAdditionalInfo(additionalInfo)),
+  setPhoneNumber: phoneNumber => dispatch(setPhoneNumber(phoneNumber))
 });
 
 export default connect(

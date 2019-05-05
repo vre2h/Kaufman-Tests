@@ -1,6 +1,10 @@
 export const SET_FNAME = "SET_FNAME";
 export const SET_LNAME = "SET_LNAME";
 export const SET_FATHERNAME = "SET_FATHERNAME";
+export const SET_EMAIL = "SET_EMAIL";
+export const SET_ADDITIONAL_INFO = "SET_ADDITIONAL_INFO";
+export const SET_BIRTHDAY = "SET_BIRTHDAY";
+export const SET_PHONE_NUMBER = "SET_PHONE_NUMBER";
 
 export const SET_CT_ITEM = "SET_CT_ITEM";
 export const SET_PR_ITEM = "SET_PR_ITEM";

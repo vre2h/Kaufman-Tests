@@ -29,7 +29,15 @@ const styles = StyleSheet.create({
   }
 });
 
-const UserInfo = ({ fname, lname, fatherName, onEdit }) => {
+const UserInfo = ({
+  fname,
+  lname,
+  fatherName,
+  onEdit,
+  birthday,
+  additionalInfo,
+  email
+}) => {
   return (
     <Container>
       <Content keyboardShouldPersistTaps="always" padder>
@@ -50,6 +58,18 @@ const UserInfo = ({ fname, lname, fatherName, onEdit }) => {
               <View style={styles.userInfo}>
                 <Text style={styles.userDesc}>Father Name:</Text>
                 <Text>{fatherName || "-"}</Text>
+              </View>
+              <View style={styles.userInfo}>
+                <Text style={styles.userDesc}>Email:</Text>
+                <Text>{email || "-"}</Text>
+              </View>
+              <View style={styles.userInfo}>
+                <Text style={styles.userDesc}>Age:</Text>
+                <Text>{birthday || "-"}</Text>
+              </View>
+              <View style={styles.userInfo}>
+                <Text style={styles.userDesc}>Additional Info:</Text>
+                <Text>{additionalInfo || "-"}</Text>
               </View>
             </Body>
           </CardItem>
