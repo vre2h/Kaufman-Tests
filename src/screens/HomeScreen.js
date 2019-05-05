@@ -201,8 +201,11 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  CTTests: state.conceptualThinking.tests,
-  PRTests: state.pr.tests,
+  CTTests: {
+    ...state.conceptualThinking.tests,
+    finished: state.conceptualThinking.finished
+  },
+  PRTests: { ...state.pr.tests, finished: state.pr.finished },
   userInfo: state.userInfo
 });
 
