@@ -85,8 +85,11 @@ export const sendRes = testResult => dispatch => {
   dispatch(sendResReq());
   doPost("https://sheltered-harbor-32906.herokuapp.com/send-post", testResult)
     .then(r => {
-      console.log(r);
+      console.log(`response:\n${r}`);
       dispatch(successResReq());
     })
-    .catch(() => dispatch(failedResReq()));
+    .catch(e => {
+      console.log(`error:\n${e}`);
+      dispatch(failedResReq());
+    });
 };
