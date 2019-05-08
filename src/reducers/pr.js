@@ -14,7 +14,8 @@ const tests = (state = initialState, action) => {
           delta:
             (action.payload.endTime.getTime() -
               action.payload.startTime.getTime()) /
-            1000
+            1000,
+          data: action.payload.data
         }
       };
     case SET_PR_ITEM_TIME:

@@ -1,5 +1,12 @@
+import { Dimensions } from "react-native";
+
+const width = Dimensions.get("window").height;
+const height = Dimensions.get("window").width;
+
 export default {
   title: "Pattern Reasoning",
+  width,
+  height,
   0: {
     id: 1,
     description: "Test 2",

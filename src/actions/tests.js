@@ -24,7 +24,8 @@ export const setCTTestItem = ({
   answerId,
   testsLength,
   endTime,
-  startTime
+  startTime,
+  data
 }) => ({
   type: SET_CT_ITEM,
   payload: {
@@ -32,7 +33,8 @@ export const setCTTestItem = ({
     answerId,
     testsLength,
     endTime,
-    startTime
+    startTime,
+    data
   }
 });
 
@@ -49,7 +51,8 @@ export const setPRTestItem = ({
   answerId,
   testsLength,
   endTime,
-  startTime
+  startTime,
+  data
 }) => ({
   type: SET_PR_ITEM,
   payload: {
@@ -57,7 +60,8 @@ export const setPRTestItem = ({
     answerId,
     testsLength,
     endTime,
-    startTime
+    startTime,
+    data
   }
 });
 
