@@ -1,13 +1,15 @@
 import React from "react";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 import Stager, { Stage } from "react-native-stager";
 import { If, Then, Else } from "react-if";
+import resultStyles from "../styles/Results";
 
-import { setPRTestItem, dropPR, setPRTestItemTime } from "../actions/tests";
-import PrintResults from "../components/Results";
+import { setPRTestItem, setPRTestItemTime } from "../actions/tests";
 import PRItemView from "../components/PRItemView";
 import BackHeader from "../components/BackHeader";
+import Results from "../containers/Results";
 
 class PatternReasoningScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -17,19 +19,15 @@ class PatternReasoningScreen extends React.Component {
   });
 
   render() {
-    const {
-      tests,
-      finished,
-      handleChosenItem,
-      resetData,
-      handleStartTime
-    } = this.props;
+    const { tests, finished, handleChosenItem, handleStartTime } = this.props;
 
     return (
-      <ScrollView>
+      <ScrollView
+        contentContainerStyle={finished ? resultStyles.container : {}}
+      >
         <If condition={finished}>
           <Then>
-            <PrintResults resetData={resetData} tests={tests} />
+            <Results test="pr" />
           </Then>
           <Else>
             <Stager>
@@ -64,7 +62,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   handleChosenItem: arg => dispatch(setPRTestItem(arg)),
-  resetData: () => dispatch(dropPR()),
   handleStartTime: arg => dispatch(setPRTestItemTime(arg))
 });
 

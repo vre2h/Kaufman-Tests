@@ -1,13 +1,15 @@
 import React from "react";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 import Stager, { Stage } from "react-native-stager";
 import { If, Then, Else } from "react-if";
 
-import { setCTTestItem, dropCT, setCTTestItemTime } from "../actions/tests";
-import PrintResults from "../components/Results";
+import { setCTTestItem, setCTTestItemTime } from "../actions/tests";
 import CTItemView from "../components/CTItemView";
 import BackHeader from "../components/BackHeader";
+import Results from "../containers/Results";
+import resultStyles from "../styles/Results";
 
 class ConceptualThinkingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -17,19 +19,15 @@ class ConceptualThinkingScreen extends React.Component {
   });
 
   render() {
-    const {
-      tests,
-      finished,
-      handleChosenItem,
-      resetData,
-      handleStartTime
-    } = this.props;
+    const { tests, finished, handleChosenItem, handleStartTime } = this.props;
 
     return (
-      <ScrollView>
+      <ScrollView
+        contentContainerStyle={finished ? resultStyles.container : {}}
+      >
         <If condition={finished}>
           <Then>
-            <PrintResults resetData={resetData} tests={tests} />
+            <Results test="ct" />
           </Then>
           <Else>
             <Stager>
@@ -64,8 +62,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   handleChosenItem: arg => dispatch(setCTTestItem(arg)),
-  handleStartTime: arg => dispatch(setCTTestItemTime(arg)),
-  resetData: () => dispatch(dropCT())
+  handleStartTime: arg => dispatch(setCTTestItemTime(arg))
 });
 
 export default connect(

@@ -1,21 +1,24 @@
 import React from "react";
-import { View, Text } from "react-native";
-import { Button } from "native-base";
+import { View } from "react-native";
+import { Button, Text } from "native-base";
 
-const PrintResults = ({ tests, resetData }) => {
+const PrintResults = ({ sendData, resetData }) => {
   return (
     <View>
-      <View>
-        <Text>Qstn: answer answered delta</Text>
-      </View>
-      {Array.from(tests).map(({ id, answer, answered, delta }) => (
-        <View key={id}>
-          <Text>
-            {id}: {answer} {answered} {delta}s
-          </Text>
-        </View>
-      ))}
-      <Button type="primary" block onPress={resetData}>
+      <Button
+        style={{ color: "white", marginBottom: 15 }}
+        type="primary"
+        block
+        onPress={sendData}
+      >
+        <Text>Send Results</Text>
+      </Button>
+      <Button
+        style={{ color: "white" }}
+        type="primary"
+        block
+        onPress={resetData}
+      >
         <Text>Reset</Text>
       </Button>
     </View>

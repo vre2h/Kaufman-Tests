@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { Button } from "native-base";
 import { WebBrowser } from "expo";
-import { doPost, doGet } from "../api/request";
 import { connect } from "react-redux";
 import { sendRes } from "../actions/tests";
 class HomeScreen extends React.Component {
