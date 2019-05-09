@@ -64,7 +64,7 @@ const UserInfo = ({
                 <Text>{email || "-"}</Text>
               </View>
               <View style={styles.userInfo}>
-                <Text style={styles.userDesc}>Age:</Text>
+                <Text style={styles.userDesc}>Birthday:</Text>
                 <Text>{birthday || "-"}</Text>
               </View>
               <View style={styles.userInfo}>

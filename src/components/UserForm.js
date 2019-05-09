@@ -7,8 +7,10 @@ import {
   Input,
   Label,
   Button,
-  Text
+  Text,
+  View
 } from "native-base";
+import DatePicker from "react-native-datepicker";
 
 const UserForm = ({
   onLname,
@@ -51,10 +53,44 @@ const UserForm = ({
             <Label>Phone Number</Label>
             <Input value={phoneNumber} onChangeText={onPhoneNumber} />
           </Item>
-          <Item floatingLabel>
-            <Label>Age</Label>
-            <Input value={birthday} onChangeText={onBirthday} />
-          </Item>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "column",
+              alignItems: "stretch",
+              marginLeft: 15,
+              marginTop: 15,
+              borderBottomColor: "lightgrey",
+              borderBottomWidth: 0.5
+            }}
+          >
+            <Label
+              style={{
+                color: "grey",
+                fontSize: 15
+              }}
+            >
+              Birthday
+            </Label>
+            <DatePicker
+              style={{ width: "auto" }}
+              mode="date"
+              placeholder="Select date"
+              format="YYYY-MM-DD"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              date={birthday}
+              onDateChange={onBirthday}
+              customStyles={{
+                dateInput: {
+                  borderBottomWidth: 0,
+                  borderTopWidth: 0,
+                  borderRightWidth: 0,
+                  borderLeftWidth: 0
+                }
+              }}
+            />
+          </View>
           <Item floatingLabel>
             <Label>Additional Info</Label>
             <Input
