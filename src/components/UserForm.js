@@ -7,8 +7,7 @@ import {
   Input,
   Label,
   Button,
-  Text,
-  Textarea
+  Text
 } from "native-base";
 
 const UserForm = ({
@@ -56,15 +55,18 @@ const UserForm = ({
             <Label>Age</Label>
             <Input value={birthday} onChangeText={onBirthday} />
           </Item>
-          <Textarea
-            onChange={e => {
-              onAdditionalInfo(e.nativeEvent.text);
-            }}
-            value={additionalInfo}
-            rowSpan={5}
-            bordered
-            placeholder="Textarea"
-          />
+          <Item floatingLabel>
+            <Label>Additional Info</Label>
+            <Input
+              onChangeText={onAdditionalInfo}
+              value={additionalInfo}
+              numberOfLines={5}
+              multiline={true}
+              style={{
+                height: 150
+              }}
+            />
+          </Item>
         </Form>
         <Button
           onPress={() => onEdit(false)}
