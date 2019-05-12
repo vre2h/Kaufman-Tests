@@ -13,7 +13,7 @@ import resultStyles from "../styles/Results";
 
 class ConceptualThinkingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: "Test 1",
+    title: "Conceptual Thinking",
     tabBarVisible: false,
     headerLeft: () => <BackHeader navigate={navigation.navigate} />
   });

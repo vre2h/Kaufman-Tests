@@ -1,35 +1,61 @@
 import React from "react";
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  Image,
-  TouchableWithoutFeedback
-} from "react-native";
+import { View, TouchableOpacity, Text, Image } from "react-native";
 
-const CTView = ({
-  context,
-  images,
-  id,
-  handleChosenItem,
-  testsLength,
-  handleStartTime
-}) => {
-  const startTime = new Date();
-  handleStartTime({ startTime, itemId: id - 1 });
-  const data = [];
+class CTView extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <TouchableWithoutFeedback
-      onPress={e =>
-        data.push([
-          e.nativeEvent.pageX.toFixed(0),
-          e.nativeEvent.pageY.toFixed(0)
-        ])
-      }
-    >
-      <View onPress={e => console.log(e)}>
-        <Text>{id}</Text>
+    this.state = {
+      startTime: "",
+      itemId: this.props.id - 1,
+      testsLength: this.props.testsLength - 1,
+      data: []
+    };
+  }
+
+  componentDidMount() {
+    const startTime = new Date();
+    const { itemId } = this.state;
+
+    this.setState({
+      startTime
+    });
+    this.props.handleStartTime({ startTime, itemId });
+  }
+
+  onTouch = dots => {
+    this.setState(({ data }) => ({
+      data: [...data, dots]
+    }));
+  };
+
+  onSubmit = async ({ dots, answerId }) => {
+    await this.onTouch(dots);
+
+    const { itemId, testsLength, startTime, data } = this.state;
+    const { handleChosenItem, context } = this.props;
+    console.log(data);
+    handleChosenItem({
+      itemId,
+      answerId,
+      testsLength,
+      endTime: new Date(),
+      startTime,
+      data
+    });
+    context.next();
+  };
+
+  render() {
+    const { images } = this.props;
+
+    return (
+      <View
+        onStartShouldSetResponder={event => {
+          this.onTouch([event.nativeEvent.pageX, event.nativeEvent.pageY]);
+          return true;
+        }}
+      >
         <View
           style={{
             flex: 1,
@@ -37,30 +63,23 @@ const CTView = ({
             flexWrap: "wrap"
           }}
         >
-          {images.map((src, idx) => {
-            return (
-              <TouchableOpacity
-                key={idx}
-                onPress={() => {
-                  handleChosenItem({
-                    itemId: id - 1,
-                    answerId: idx + 1,
-                    testsLength: testsLength - 1,
-                    endTime: new Date(),
-                    startTime,
-                    data
-                  });
-                  context.next();
-                }}
-              >
-                <Image style={{ width: 150, height: 150 }} source={src} />
-              </TouchableOpacity>
-            );
-          })}
+          {images.map((src, idx) => (
+            <TouchableOpacity
+              key={idx}
+              onPress={event => {
+                this.onSubmit({
+                  answerId: idx + 1,
+                  dots: [event.nativeEvent.pageX, event.nativeEvent.pageY]
+                });
+              }}
+            >
+              <Image style={{ width: 150, height: 150 }} source={src} />
+            </TouchableOpacity>
+          ))}
         </View>
       </View>
-    </TouchableWithoutFeedback>
-  );
-};
+    );
+  }
+}
 
 export default CTView;

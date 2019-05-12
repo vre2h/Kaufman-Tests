@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import ResultsView from "../components/Results";
-import { dropCT, sendRes } from "../actions/tests";
+import { dropCT, sendRes, dropPR } from "../actions/tests";
 
 class Results extends React.Component {
   constructor(props) {
@@ -25,16 +25,22 @@ class Results extends React.Component {
     });
   };
 
+  resetData = () => {
+    const { test, resetCTData, resetPRData } = this.props;
+    const resetFn = test === "ct" ? resetCTData : resetPRData;
+
+    resetFn();
+  };
+
   render() {
-    return (
-      <ResultsView resetData={this.props.resetData} sendData={this.sendData} />
-    );
+    return <ResultsView resetData={this.resetData} sendData={this.sendData} />;
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   sendData: arg => dispatch(sendRes(arg)),
-  resetData: () => dispatch(dropCT())
+  resetCTData: () => dispatch(dropCT()),
+  resetPRData: () => dispatch(dropPR())
 });
 
 const mapStateToProps = state => ({

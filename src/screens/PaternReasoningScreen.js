@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import { connect } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 import Stager, { Stage } from "react-native-stager";
@@ -13,7 +12,7 @@ import Results from "../containers/Results";
 
 class PatternReasoningScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: "Test 1",
+    title: "Pattern Reasoning",
     tabBarVisible: false,
     headerLeft: () => <BackHeader navigate={navigation.navigate} />
   });
