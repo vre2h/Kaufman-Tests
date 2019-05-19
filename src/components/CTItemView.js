@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity, Text, Image } from "react-native";
+import { View, TouchableOpacity, Image } from "react-native";
 
 class CTView extends React.Component {
   constructor(props) {
@@ -23,27 +23,24 @@ class CTView extends React.Component {
     this.props.handleStartTime({ startTime, itemId });
   }
 
-  onTouch = dots => {
-    this.setState(({ data }) => ({
-      data: [...data, dots]
-    }));
-  };
+  // onTouch = dots => {
+  //   this.setState(({ data }) => ({
+  //     data: [...data, dots]
+  //   }));
+  // };
 
   onSubmit = async ({ dots, answerId }) => {
-    await this.onTouch(dots);
-
-    const { itemId, testsLength, startTime, data } = this.state;
-    const { handleChosenItem, context } = this.props;
-    console.log(data);
+    const { itemId, testsLength, startTime } = this.state;
+    const { handleChosenItem, context, data } = this.props;
     handleChosenItem({
       itemId,
       answerId,
       testsLength,
       endTime: new Date(),
       startTime,
-      data
+      data: [...data, dots]
     });
-    context.next();
+    await context.next();
   };
 
   render() {
@@ -51,32 +48,26 @@ class CTView extends React.Component {
 
     return (
       <View
-        onStartShouldSetResponder={event => {
-          this.onTouch([event.nativeEvent.pageX, event.nativeEvent.pageY]);
-          return true;
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "space-around"
         }}
       >
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            flexWrap: "wrap"
-          }}
-        >
-          {images.map((src, idx) => (
-            <TouchableOpacity
-              key={idx}
-              onPress={event => {
-                this.onSubmit({
-                  answerId: idx + 1,
-                  dots: [event.nativeEvent.pageX, event.nativeEvent.pageY]
-                });
-              }}
-            >
-              <Image style={{ width: 150, height: 150 }} source={src} />
-            </TouchableOpacity>
-          ))}
-        </View>
+        {images.map((src, idx) => (
+          <TouchableOpacity
+            key={idx}
+            onPress={event => {
+              this.onSubmit({
+                answerId: idx + 1,
+                dots: [event.nativeEvent.pageX, event.nativeEvent.pageY]
+              });
+            }}
+          >
+            <Image style={{ width: 150, height: 150 }} source={src} />
+          </TouchableOpacity>
+        ))}
       </View>
     );
   }

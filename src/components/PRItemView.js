@@ -75,7 +75,8 @@ class PRItemView extends React.Component {
             style={{
               flex: 1,
               flexDirection: "row",
-              flexWrap: "wrap"
+              flexWrap: "wrap",
+              justifyContent: "space-around"
             }}
           >
             {images.slice(1).map((src, idx) => {

@@ -1,14 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
-import Stager, { Stage } from "react-native-stager";
+import Stager, {
+  Stage,
+  StageButtons,
+  styles,
+  StageProgress
+} from "react-native-stager";
 import { If, Then, Else } from "react-if";
-import resultStyles from "../styles/Results";
+import { Button, View, Text } from "native-base";
 
+import resultStyles from "../styles/Results";
+import testsStyles from "../styles/Tests";
 import { setPRTestItem, setPRTestItemTime } from "../actions/tests";
 import PRItemView from "../components/PRItemView";
 import BackHeader from "../components/BackHeader";
-import Results from "../containers/Results";
+import Results from "../components/Results";
 
 class PatternReasoningScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -30,6 +37,47 @@ class PatternReasoningScreen extends React.Component {
           </Then>
           <Else>
             <Stager>
+              <StageProgress>
+                {({ context }) => (
+                  <View
+                    style={{
+                      marginTop: 15
+                    }}
+                  >
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        justifyContent: "center"
+                      }}
+                    >
+                      {context.state.stages.map((stage, index) => (
+                        <View
+                          key={index}
+                          style={[
+                            styles.progressIndicator,
+                            {
+                              flex: 1 / context.state.stages.length / 2
+                            },
+                            {
+                              backgroundColor:
+                                context.state.currentStage &&
+                                context.state.stages.indexOf(stage) <=
+                                  context.state.stages.indexOf(
+                                    context.state.currentStage
+                                  )
+                                  ? "blue"
+                                  : "gray"
+                            }
+                          ]}
+                        />
+                      ))}
+                    </View>
+                    <View style={styles.progressPad} />
+                  </View>
+                )}
+              </StageProgress>
+
               {Array.from(tests).map(({ id, images }) => (
                 <Stage continue={() => true} key={id}>
                   {({ context }) => (
@@ -44,6 +92,18 @@ class PatternReasoningScreen extends React.Component {
                   )}
                 </Stage>
               ))}
+              <StageButtons>
+                {({ context }) => (
+                  <View style={testsStyles.btnContainer}>
+                    <Button onPress={context.prev}>
+                      <Text>Previous</Text>
+                    </Button>
+                    <Button onPress={context.next}>
+                      <Text>Next</Text>
+                    </Button>
+                  </View>
+                )}
+              </StageButtons>
             </Stager>
           </Else>
         </If>
