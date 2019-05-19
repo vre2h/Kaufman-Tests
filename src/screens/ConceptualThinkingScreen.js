@@ -36,8 +36,26 @@ class ConceptualThinkingScreen extends React.Component {
     }));
   };
 
+  onSubmit = async (
+    context,
+    { dots, answerId, startTime, itemId, testsLength }
+  ) => {
+    const { data } = this.state;
+    const { handleChosenItem } = this.props;
+
+    await handleChosenItem({
+      itemId,
+      answerId,
+      testsLength,
+      endTime: new Date(),
+      startTime,
+      data: [...data, dots]
+    });
+    context.next();
+  };
+
   render() {
-    const { tests, finished, handleChosenItem, handleStartTime } = this.props;
+    const { tests, finished, handleStartTime } = this.props;
 
     return (
       <ScrollView
@@ -46,8 +64,8 @@ class ConceptualThinkingScreen extends React.Component {
         }
       >
         <View
-          onStartShouldSetResponder={event => {
-            this.onTouch(undefined, [
+          onStartShouldSetResponder={async event => {
+            await this.onTouch(undefined, [
               event.nativeEvent.pageX,
               event.nativeEvent.pageY
             ]);
@@ -69,9 +87,10 @@ class ConceptualThinkingScreen extends React.Component {
               >
                 <Stager
                   onChange={() =>
-                    this.setState({
+                    this.setState(({ id }) => ({
+                      id: id + 1,
                       data: []
-                    })
+                    }))
                   }
                 >
                   <StageProgress>
@@ -119,15 +138,11 @@ class ConceptualThinkingScreen extends React.Component {
                     <Stage continue={() => true} key={id}>
                       {({ context }) => (
                         <CTItemView
-                          updId={() => this.updId(id)}
-                          context={context}
                           id={id}
                           images={images}
-                          handleChosenItem={handleChosenItem}
-                          handleStartTime={handleStartTime}
                           testsLength={tests.length && tests.length}
-                          onTouch={args => this.onTouch(id, args)}
-                          data={this.state.data}
+                          handleStartTime={handleStartTime}
+                          onSubmit={args => this.onSubmit(context, args)}
                         />
                       )}
                     </Stage>

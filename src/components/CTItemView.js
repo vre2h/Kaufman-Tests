@@ -4,14 +4,11 @@ import { View, TouchableOpacity, Image } from "react-native";
 class CTView extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      startTime: "",
-      itemId: this.props.id - 1,
-      testsLength: this.props.testsLength - 1,
-      data: []
-    };
   }
+
+  state = {
+    startTime: ""
+  };
 
   componentDidMount() {
     const startTime = new Date();
@@ -23,28 +20,9 @@ class CTView extends React.Component {
     this.props.handleStartTime({ startTime, itemId });
   }
 
-  // onTouch = dots => {
-  //   this.setState(({ data }) => ({
-  //     data: [...data, dots]
-  //   }));
-  // };
-
-  onSubmit = async ({ dots, answerId }) => {
-    const { itemId, testsLength, startTime } = this.state;
-    const { handleChosenItem, context, data } = this.props;
-    handleChosenItem({
-      itemId,
-      answerId,
-      testsLength,
-      endTime: new Date(),
-      startTime,
-      data: [...data, dots]
-    });
-    await context.next();
-  };
-
   render() {
-    const { images } = this.props;
+    const { startTime } = this.state;
+    const { images, onSubmit, testsLength, itemId } = this.props;
 
     return (
       <View
@@ -59,9 +37,12 @@ class CTView extends React.Component {
           <TouchableOpacity
             key={idx}
             onPress={event => {
-              this.onSubmit({
+              onSubmit({
                 answerId: idx + 1,
-                dots: [event.nativeEvent.pageX, event.nativeEvent.pageY]
+                dots: [event.nativeEvent.pageX, event.nativeEvent.pageY],
+                startTime,
+                testsLength,
+                itemId
               });
             }}
           >

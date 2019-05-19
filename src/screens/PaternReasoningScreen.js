@@ -24,89 +24,135 @@ class PatternReasoningScreen extends React.Component {
     headerLeft: () => <BackHeader navigate={navigation.navigate} />
   });
 
+  state = {
+    data: [],
+    id: 1
+  };
+
+  onTouch = (idx, dots) => {
+    this.setState(({ data, id }) => ({
+      data: [...data, dots],
+      id: idx || id
+    }));
+  };
+
+  onSubmit = async (
+    context,
+    { dots, answerId, startTime, itemId, testsLength }
+  ) => {
+    const { data } = this.state;
+    const { handleChosenItem } = this.props;
+    await handleChosenItem({
+      itemId,
+      answerId,
+      testsLength,
+      endTime: new Date(),
+      startTime,
+      data: [...data, dots]
+    });
+    context.next();
+  };
+
   render() {
-    const { tests, finished, handleChosenItem, handleStartTime } = this.props;
+    const { tests, finished, handleStartTime } = this.props;
 
     return (
       <ScrollView
         contentContainerStyle={finished ? resultStyles.container : {}}
       >
-        <If condition={finished}>
-          <Then>
-            <Results test="pr" />
-          </Then>
-          <Else>
-            <Stager>
-              <StageProgress>
-                {({ context }) => (
-                  <View
-                    style={{
-                      marginTop: 15
-                    }}
-                  >
+        <View
+          onStartShouldSetResponder={async event => {
+            await this.onTouch(undefined, [
+              event.nativeEvent.pageX,
+              event.nativeEvent.pageY
+            ]);
+            return true;
+          }}
+          style={{ flex: 1 }}
+        >
+          <If condition={finished}>
+            <Then>
+              <Results test="pr" />
+            </Then>
+            <Else>
+              <Stager
+                onChange={() =>
+                  this.setState(({ id }) => ({
+                    id: id + 1,
+                    data: []
+                  }))
+                }
+              >
+                <StageProgress>
+                  {({ context }) => (
                     <View
                       style={{
-                        flex: 1,
-                        flexDirection: "row",
-                        justifyContent: "center"
+                        marginTop: 15
                       }}
                     >
-                      {context.state.stages.map((stage, index) => (
-                        <View
-                          key={index}
-                          style={[
-                            styles.progressIndicator,
-                            {
-                              flex: 1 / context.state.stages.length / 2
-                            },
-                            {
-                              backgroundColor:
-                                context.state.currentStage &&
-                                context.state.stages.indexOf(stage) <=
-                                  context.state.stages.indexOf(
-                                    context.state.currentStage
-                                  )
-                                  ? "blue"
-                                  : "gray"
-                            }
-                          ]}
-                        />
-                      ))}
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "row",
+                          justifyContent: "center"
+                        }}
+                      >
+                        {context.state.stages.map((stage, index) => (
+                          <View
+                            key={index}
+                            style={[
+                              styles.progressIndicator,
+                              {
+                                flex: 1 / context.state.stages.length / 2
+                              },
+                              {
+                                backgroundColor:
+                                  context.state.currentStage &&
+                                  context.state.stages.indexOf(stage) <=
+                                    context.state.stages.indexOf(
+                                      context.state.currentStage
+                                    )
+                                    ? "blue"
+                                    : "gray"
+                              }
+                            ]}
+                          />
+                        ))}
+                      </View>
+                      <View style={styles.progressPad} />
                     </View>
-                    <View style={styles.progressPad} />
-                  </View>
-                )}
-              </StageProgress>
-
-              {Array.from(tests).map(({ id, images }) => (
-                <Stage continue={() => true} key={id}>
-                  {({ context }) => (
-                    <PRItemView
-                      context={context}
-                      id={id}
-                      images={images}
-                      handleChosenItem={handleChosenItem}
-                      testsLength={tests.length && tests.length}
-                      handleStartTime={handleStartTime}
-                    />
                   )}
-                </Stage>
-              ))}
-              <StageButtons>
-                {({ context }) => (
-                  <View style={testsStyles.btnContainer}>
-                    <Button onPress={context.prev}>
-                      <Text>Previous</Text>
-                    </Button>
-                    <Button onPress={context.next}>
-                      <Text>Next</Text>
-                    </Button>
-                  </View>
-                )}
-              </StageButtons>
-            </Stager>
-          </Else>
-        </If>
+                </StageProgress>
+
+                {Array.from(tests).map(({ id, images }) => (
+                  <Stage continue={() => true} key={id}>
+                    {({ context }) => (
+                      <PRItemView
+                        id={id}
+                        images={images}
+                        testsLength={tests.length && tests.length}
+                        handleStartTime={handleStartTime}
+                        onSubmit={args => this.onSubmit(context, args)}
+                      />
+                    )}
+                  </Stage>
+                ))}
+                <StageButtons>
+                  {({ context }) => (
+                    <View style={testsStyles.btnContainer}>
+                      <Button onPress={context.prev}>
+                        <Text>Previous</Text>
+                      </Button>
+                      <Button onPress={context.next}>
+                        <Text>Next</Text>
+                      </Button>
+                    </View>
+                  )}
+                </StageButtons>
+              </Stager>
+            </Else>
+          </If>
+        </View>
       </ScrollView>
     );
   }

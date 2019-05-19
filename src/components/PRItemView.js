@@ -5,10 +5,7 @@ class PRItemView extends React.Component {
     super(props);
 
     this.state = {
-      startTime: "",
-      itemId: this.props.id - 1,
-      testsLength: this.props.testsLength - 1,
-      data: []
+      startTime: ""
     };
   }
 
@@ -22,82 +19,56 @@ class PRItemView extends React.Component {
     this.props.handleStartTime({ startTime, itemId });
   }
 
-  onTouch = dots => {
-    this.setState(({ data }) => ({
-      data: [...data, dots]
-    }));
-  };
-
-  onSubmit = async ({ dots, answerId }) => {
-    await this.onTouch(dots);
-
-    const { itemId, testsLength, startTime, data } = this.state;
-    const { handleChosenItem, context } = this.props;
-
-    handleChosenItem({
-      itemId,
-      answerId,
-      testsLength,
-      endTime: new Date(),
-      startTime,
-      data
-    });
-    context.next();
-  };
-
   render() {
-    const { images } = this.props;
+    const { startTime } = this.state;
+    const { images, onSubmit, testsLength, itemId } = this.props;
 
     return (
-      <View
-        onStartShouldSetResponder={event => {
-          this.onTouch([event.nativeEvent.pageX, event.nativeEvent.pageY]);
-          return true;
-        }}
-      >
-        <View flex={1}>
-          <View
-            flex={1}
+      <View flex={1}>
+        <View
+          flex={1}
+          style={{
+            marginTop: 20,
+            marginBottom: 15
+          }}
+        >
+          <Image
             style={{
-              marginTop: 20,
-              marginBottom: 15
+              height: 100,
+              width: Dimensions.get("window").width
             }}
-          >
-            <Image
-              style={{
-                height: 100,
-                width: Dimensions.get("window").width
-              }}
-              source={images[0]}
-            />
-          </View>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "space-around"
-            }}
-          >
-            {images.slice(1).map((src, idx) => {
-              return (
-                <TouchableOpacity
-                  key={idx}
-                  onPress={event => {
-                    this.onSubmit({
-                      answerId: idx + 1,
-                      dots: [event.nativeEvent.pageX, event.nativeEvent.pageY]
-                    });
-                  }}
-                >
-                  <Image
-                    style={{ width: 150, height: 150, margin: 5 }}
-                    source={src}
-                  />
-                </TouchableOpacity>
-              );
-            })}
-          </View>
+            source={images[0]}
+          />
+        </View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "space-around"
+          }}
+        >
+          {images.slice(1).map((src, idx) => {
+            return (
+              <TouchableOpacity
+                key={idx}
+                onPress={event => {
+                  onSubmit({
+                    answerId: idx + 1,
+                    dots: [event.nativeEvent.pageX, event.nativeEvent.pageY],
+                    startTime,
+                    testsLength,
+                    itemId
+                  });
+                }}
+              >
+                <Image
+                  style={{ width: 150, height: 150, margin: 5 }}
+                  source={src}
+                />
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </View>
     );
