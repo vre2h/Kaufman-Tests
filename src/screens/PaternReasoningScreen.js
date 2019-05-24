@@ -9,6 +9,7 @@ import Stager, {
 } from "react-native-stager";
 import { If, Then, Else } from "react-if";
 import { Button, View, Text } from "native-base";
+import { Button as ButtonRN, Platform } from "react-native";
 
 import resultStyles from "../styles/Results";
 import testsStyles from "../styles/Tests";
@@ -68,7 +69,9 @@ class PatternReasoningScreen extends React.Component {
             ]);
             return true;
           }}
-          style={{ flex: 1 }}
+          style={
+            finished ? { flex: 1, ...resultStyles.container } : { flex: 1 }
+          }
         >
           <If condition={finished}>
             <Then>
@@ -141,12 +144,27 @@ class PatternReasoningScreen extends React.Component {
                 <StageButtons>
                   {({ context }) => (
                     <View style={testsStyles.btnContainer}>
-                      <Button onPress={context.prev}>
-                        <Text>Previous</Text>
-                      </Button>
-                      <Button onPress={context.next}>
-                        <Text>Next</Text>
-                      </Button>
+                      {Platform.OS === "ios" ? (
+                        <>
+                          <Button onPress={context.prev}>
+                            <Text>Previous</Text>
+                          </Button>
+                          <Button onPress={context.next}>
+                            <Text>Next</Text>
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <ButtonRN
+                            title="Previous"
+                            onPress={() => context.prev()}
+                          />
+                          <ButtonRN
+                            title="Next"
+                            onPress={() => context.next()}
+                          />
+                        </>
+                      )}
                     </View>
                   )}
                 </StageButtons>

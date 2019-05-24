@@ -9,6 +9,7 @@ import Stager, {
 } from "react-native-stager";
 import { If, Then, Else } from "react-if";
 import { Button, View, Text } from "native-base";
+import { Button as ButtonRN, Platform } from "react-native";
 
 import { setCTTestItem, setCTTestItemTime } from "../actions/tests";
 import CTItemView from "../components/CTItemView";
@@ -150,12 +151,27 @@ class ConceptualThinkingScreen extends React.Component {
                   <StageButtons>
                     {({ context }) => (
                       <View style={testsStyles.btnContainer}>
-                        <Button onPress={context.prev}>
-                          <Text>Previous</Text>
-                        </Button>
-                        <Button onPress={context.next}>
-                          <Text>Next</Text>
-                        </Button>
+                        {Platform.OS === "ios" ? (
+                          <>
+                            <Button onPress={context.prev}>
+                              <Text>Previous</Text>
+                            </Button>
+                            <Button onPress={context.next}>
+                              <Text>Next</Text>
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <ButtonRN
+                              title="Previous"
+                              onPress={() => context.prev()}
+                            />
+                            <ButtonRN
+                              title="Next"
+                              onPress={() => context.next()}
+                            />
+                          </>
+                        )}
                       </View>
                     )}
                   </StageButtons>
