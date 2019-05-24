@@ -42,6 +42,10 @@ export default class App extends React.Component {
 
   _loadResourcesAsync = async () => {
     return Promise.all([
+      Font.loadAsync({
+        Roboto: require("native-base/Fonts/Roboto.ttf"),
+        Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
+      }),
       Asset.loadAsync([
         require("./src/assets/images/robot-dev.png"),
         require("./src/assets/images/robot-prod.png")
