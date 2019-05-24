@@ -17,7 +17,7 @@ const BackHeader = ({ navigate }) => {
       onPress={() => navigate("Tests")}
     >
       <Icon.Ionicons
-        name={Platform.OS === "ios" ? `ios-arrow-back` : "left"}
+        name={Platform.OS === "ios" ? `ios-arrow-back` : "md-arrow-dropleft"}
         size={35}
         color={Colors.tabIconSelected}
       />

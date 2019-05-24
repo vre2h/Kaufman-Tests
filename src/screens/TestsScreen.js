@@ -30,7 +30,9 @@ export default class TestsScreen extends React.Component {
       <ListItem
         rightIcon={() => (
           <TabBarIcon
-            name={Platform.OS === "ios" ? `ios-arrow-forward` : "right"}
+            name={
+              Platform.OS === "ios" ? `ios-arrow-forward` : "md-arrow-dropright"
+            }
             _onPress={() => navigation.navigate("Tests")}
           />
         )}
