@@ -133,6 +133,7 @@ class PatternReasoningScreen extends React.Component {
                         testsLength={tests.length && tests.length}
                         handleStartTime={handleStartTime}
                         onSubmit={args => this.onSubmit(context, args)}
+                        itemId={id}
                       />
                     )}
                   </Stage>

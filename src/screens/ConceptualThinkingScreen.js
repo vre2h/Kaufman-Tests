@@ -53,7 +53,6 @@ class ConceptualThinkingScreen extends React.Component {
     });
     context.next();
   };
-
   render() {
     const { tests, finished, handleStartTime } = this.props;
 
@@ -139,6 +138,7 @@ class ConceptualThinkingScreen extends React.Component {
                       {({ context }) => (
                         <CTItemView
                           id={id}
+                          itemId={id}
                           images={images}
                           testsLength={tests.length && tests.length}
                           handleStartTime={handleStartTime}
