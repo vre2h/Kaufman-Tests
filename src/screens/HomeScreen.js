@@ -42,20 +42,6 @@ class HomeScreen extends React.Component {
               Application will be filled with tests as soon as possible, please
               don't be mad at me.
             </Text>
-            <Button
-              style={{ marginTop: 20 }}
-              block
-              primary
-              onPress={this.sendData}
-            >
-              <Text
-                style={{
-                  color: "#ffffff"
-                }}
-              >
-                Send Data
-              </Text>
-            </Button>
           </View>
         </ScrollView>
       </View>

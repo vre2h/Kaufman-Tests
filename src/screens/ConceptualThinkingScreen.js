@@ -70,7 +70,7 @@ class ConceptualThinkingScreen extends React.Component {
             ]);
             return true;
           }}
-          style={{ flex: 1 }}
+          style={{ flex: 1, ...resultStyles.container }}
         >
           <If condition={finished}>
             <Then>
