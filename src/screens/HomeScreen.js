@@ -39,8 +39,18 @@ class HomeScreen extends React.Component {
               Welcome to the Kauffmanov's test Appliaction.
             </Text>
             <Text style={styles.getStartedText}>
-              Application will be filled with tests as soon as possible, please
-              don't be mad at me.
+              The Kaufman Assessment Battery for Children (KABC) is a clinical
+              instrument (psychological diagnostic test) for assessing cognitive
+              development. Its construction incorporates several recent
+              developments in both psychological theory and statistical
+              methodology. The test was developed by Alan S. Kaufman and Nadeen
+              L. Kaufman in 1983 and revised in 2004.
+            </Text>
+            <Text style={styles.getStartedText}>
+              At first you should fill user profile with your data and provide
+              email to get results. Then you should pass the test and click
+              "Send Results". After that you can find all information in your
+              mailbox.
             </Text>
           </View>
         </ScrollView>
